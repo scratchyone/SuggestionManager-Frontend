@@ -82,16 +82,18 @@ export default function Manager(props) {
         <div className="subtext">Remember, your URL is your admin password</div>
         <div className="manager_new_suggestions">
           {data &&
-            (data.project.suggestions.filter((s) => s.timestamp > origTimestamp)
-              .length === 0
+            (data.project.suggestions.filter(
+              (s) => s.timestamp > (origTimestamp || Date.now())
+            ).length === 0
               ? `No`
               : data.project.suggestions.filter(
-                  (s) => s.timestamp > origTimestamp
+                  (s) => s.timestamp > (origTimestamp || Date.now())
                 ).length)}{' '}
           New Suggestion
           {data &&
-            (data.project.suggestions.filter((s) => s.timestamp > origTimestamp)
-              .length === 1
+            (data.project.suggestions.filter(
+              (s) => s.timestamp > (origTimestamp || Date.now())
+            ).length === 1
               ? ``
               : `s`)}
           <Link href={`/suggestions/${token}`}>
@@ -101,7 +103,7 @@ export default function Manager(props) {
         <div className="suggestions_holder">
           {data &&
             data.project.suggestions
-              .filter((s) => s.timestamp > origTimestamp)
+              .filter((s) => s.timestamp > (origTimestamp || Date.now()))
               .filter((s) => !s.inTrash)
               .map((s) => (
                 <Suggestion
