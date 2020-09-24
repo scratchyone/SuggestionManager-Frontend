@@ -5,11 +5,13 @@ import { gql, useMutation, useQuery } from '@apollo/client';
 import { Suggestion } from '../../components/main.js';
 import Head from 'next/head';
 import { useEffect } from 'react';
+import add from 'date-fns/add';
+import compareAsc from 'date-fns/compareAsc';
 export default function Suggestions(props) {
   const router = useRouter();
   const { token } = router.query;
   useEffect(() => {
-    router.prefetch('/suggestions_trash/' + (token || props.token));
+    router.prefetch('/suggestions/' + (token || props.token));
   }, []);
   var { loading, error, data, refetch } = useQuery(
     gql`
@@ -23,12 +25,20 @@ export default function Suggestions(props) {
             suggestionText
             timestamp
             inTrash
+            trashedTimestamp
           }
         }
       }
     `,
     { variables: { key: token || props.token } }
   );
+  refetch();
+  let filt = (s) =>
+    s.inTrash &&
+    compareAsc(
+      add(new Date(s.trashedTimestamp * 1000), { days: 5 }),
+      Date.now()
+    ) == 1;
   return (
     <div className="floating_bg_box">
       <Head>
@@ -49,14 +59,20 @@ export default function Suggestions(props) {
       </Head>
       <ToastContainer />
       <div className="floating_card manager_card">
-        <div className="manager_title">
-          {data ? data.project.projectName : <br></br>}
+        <div className="trash_title_wrapper">
+          <div className="manager_title">
+            {data ? data.project.projectName : <br></br>}
+          </div>
+          <div className="trash_indicator">Trash</div>
+        </div>
+        <div className="subtext">
+          Items will be permenetly deleted after 5 days
         </div>
         <div className="suggestions_holder">
           {data &&
-            (data.project.suggestions.filter((s) => !s.inTrash).length ? (
+            (data.project.suggestions.filter(filt).length ? (
               data.project.suggestions
-                .filter((s) => !s.inTrash)
+                .filter(filt)
                 .map((s) => (
                   <Suggestion
                     displayName={s.displayName}
@@ -64,6 +80,8 @@ export default function Suggestions(props) {
                     token={token || props.token}
                     id={s.id}
                     refetch={refetch}
+                    inTrash={s.inTrash}
+                    trashedTimestamp={s.trashedTimestamp}
                   />
                 ))
             ) : (
@@ -74,10 +92,10 @@ export default function Suggestions(props) {
           <button
             className="setup_button"
             onClick={() => {
-              router.push('/suggestions_trash/' + (token || props.token));
+              router.push('/suggestions/' + (token || props.token));
             }}
           >
-            View Trash
+            Go Back
           </button>
         </div>
       </div>

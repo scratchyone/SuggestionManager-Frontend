@@ -307,14 +307,8 @@ button {
   color: #236eb4;
 }
 .suggestion_wrapper {
-  background: #e6e6e6;
-  border-radius: 8px;
-  padding: 3px;
-  padding-left: 13px;
-  padding-bottom: 10px;
   display: flex;
   justify-content: space-between;
-  margin-top: 20px;
 }
 .suggestion_right {
   align-items: center;
@@ -370,4 +364,44 @@ button {
   font-family: Open Sans;
   font-style: normal;
   font-size: 20px;
+}
+.trash_title_wrapper {
+  display: flex;
+  flex-direction: flex-row;
+  align-items: center;
+  justify-content: space-between;
+}
+.trash_indicator {
+  background: #af3b49;
+  border-radius: 53px;
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 35px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #ffffff;
+  padding: 4px 13px 4px 13px;
+}
+.trash_countdown {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 21px;
+  line-height: 31px;
+  display: flex;
+  align-items: center;
+  color: #d56161;
+}
+.suggestion_columns {
+  margin-top: 20px;
+  background: #e6e6e6;
+  border-radius: 8px;
+  padding: 3px;
+  padding-left: 13px;
+  padding-bottom: 10px;
+  display: flex;
+  flex-direction: column;
 }
