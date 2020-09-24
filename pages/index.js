@@ -1,12 +1,12 @@
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
+import { MAINTENANCE } from '../components/constants';
 export default function Home() {
   const router = useRouter();
   useEffect(() => {
     router.prefetch('/setup');
   }, []);
-  let ready = true;
   return (
     <div className="homescreen_background">
       <Head>
@@ -25,10 +25,12 @@ export default function Home() {
           easily.
         </div>
         <button
-          className={ready ? 'homescreen_getstarted' : 'homescreen_comingsoon'}
-          onClick={() => ready && router.push('/setup')}
+          className={
+            !MAINTENANCE ? 'homescreen_getstarted' : 'homescreen_comingsoon'
+          }
+          onClick={() => !MAINTENANCE && router.push('/setup')}
         >
-          {ready ? 'Get Started' : 'Coming Soon'}
+          {!MAINTENANCE ? 'Get Started' : 'Under Maintenance'}
         </button>
       </div>
       <div className="homescreen_box_holder">
