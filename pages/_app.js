@@ -4,9 +4,10 @@ import React from 'react';
 import { render } from 'react-dom';
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { ApolloProvider } from '@apollo/client';
+import { GQL } from '../components/constants.js';
 const client = new ApolloClient({
   // uri: 'https://backend.suggestionmanager.com/graphql',
-  uri: 'http://localhost:4000/graphql',
+  uri: GQL,
   cache: new InMemoryCache(),
 });
 function MyApp({ Component, pageProps }) {
