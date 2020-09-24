@@ -66,9 +66,6 @@ export default function Suggestions(props) {
               <div className="subtext">No Suggestions</div>
             ))}
         </div>
-        <div className="setup_button_wrapper">
-          <button className="setup_button">View Trash</button>
-        </div>
       </div>
     </div>
   );
