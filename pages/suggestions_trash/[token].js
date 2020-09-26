@@ -43,11 +43,15 @@ export default function Suggestions(props) {
     <div className="floating_bg_box">
       <Head>
         <title>
-          {data ? 'Suggestions for ' + data.project.projectName : 'Suggestions'}
+          {data
+            ? 'Trashed Suggestions for ' + data.project.projectName
+            : 'Trashed Suggestions'}
         </title>
         <meta
           content={
-            data ? 'Suggestions for ' + data.project.projectName : 'Suggestions'
+            data
+              ? 'Trashed Suggestions for ' + data.project.projectName
+              : 'Trashed Suggestions'
           }
           property="og:title"
         />
@@ -66,7 +70,7 @@ export default function Suggestions(props) {
           <div className="trash_indicator">Trash</div>
         </div>
         <div className="subtext">
-          Items will be permenetly deleted after 5 days
+          Items will be permanently deleted after 5 days
         </div>
         <div className="suggestions_holder">
           {data &&
