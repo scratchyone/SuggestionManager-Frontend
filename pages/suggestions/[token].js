@@ -5,6 +5,7 @@ import { gql, useMutation, useQuery } from '@apollo/client';
 import { Suggestion } from '../../components/main.js';
 import Head from 'next/head';
 import { useEffect } from 'react';
+import { Slide } from 'react-toastify';
 export default function Suggestions(props) {
   const router = useRouter();
   const { token } = router.query;
@@ -47,7 +48,7 @@ export default function Suggestions(props) {
         />
         <meta content="SuggestionManager" property="og:site_name" />
       </Head>
-      <ToastContainer />
+      <ToastContainer transition={Slide} />
       <div className="floating_card manager_card">
         <div className="manager_title">
           {data ? data.project.projectName : <br></br>}
@@ -64,6 +65,7 @@ export default function Suggestions(props) {
                     token={token || props.token}
                     id={s.id}
                     refetch={refetch}
+                    toast={toast}
                   />
                 ))
             ) : (

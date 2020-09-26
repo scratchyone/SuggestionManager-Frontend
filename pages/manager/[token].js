@@ -7,6 +7,7 @@ import { useApolloClient } from '@apollo/client';
 import { Suggestion } from '../../components/main.js';
 import { useEffect, useState } from 'react';
 import Head from 'next/head';
+import { Slide } from 'react-toastify';
 export default function Manager(props) {
   const router = useRouter();
   const [origTimestamp, setOrigTimestamp] = useState(null);
@@ -74,7 +75,7 @@ export default function Manager(props) {
         />
         <meta content="SuggestionManager" property="og:site_name" />
       </Head>
-      <ToastContainer />
+      <ToastContainer transition={Slide} />
       <div className="floating_card manager_card">
         <div className="manager_title">
           {data ? data.project.projectName : <br></br>}
@@ -112,6 +113,7 @@ export default function Manager(props) {
                   token={token || props.token}
                   id={s.id}
                   refetch={refetch}
+                  toast={toast}
                 />
               ))}
         </div>

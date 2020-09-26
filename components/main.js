@@ -14,6 +14,7 @@ export function Field(props) {
 import formatDistance from 'date-fns/formatDistance';
 import add from 'date-fns/add';
 import { gql, useMutation, useQuery } from '@apollo/client';
+import { toast } from 'react-toastify';
 export function Suggestion(props) {
   const [deleteSuggestion, {}] = useMutation(gql`
     mutation deleteSuggestion($key: String!, $id: Int!) {
@@ -58,6 +59,7 @@ export function Suggestion(props) {
                   variables: { key: props.token, id: props.id },
                 });
                 props.refetch();
+                toast.info('Moved suggestion to trash');
               }}
             ></i>
           )}
