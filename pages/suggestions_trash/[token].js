@@ -75,8 +75,8 @@ export default function Suggestions(props) {
         <div className="suggestions_holder">
           {data &&
             (data.project.suggestions.filter(filt).length ? (
-              data.project.suggestions
-                .filter(filt)
+              [...data.project.suggestions.filter(filt)]
+                .sort((a, b) => b.trashedTimestamp - a.trashedTimestamp)
                 .map((s) => (
                   <Suggestion
                     displayName={s.displayName}
