@@ -2,12 +2,21 @@ export function Field(props) {
   return (
     <div className="field_wrapper">
       <div className="field_label">{props.label}</div>
-      <input
-        className="field_input"
-        type={props.type}
-        value={props.value}
-        onChange={props.onChange}
-      ></input>
+      {props.textArea ? (
+        <textarea
+          className="field_input"
+          type={props.type}
+          value={props.value}
+          onChange={props.onChange}
+        ></textarea>
+      ) : (
+        <input
+          className="field_input"
+          type={props.type}
+          value={props.value}
+          onChange={props.onChange}
+        ></input>
+      )}
     </div>
   );
 }

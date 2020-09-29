@@ -195,6 +195,9 @@ body {
     max-width: 400px;
   }
 }
+textarea {
+  resize: none;
+}
 .setup_title,
 .manager_title {
   font-family: Open Sans;
@@ -218,6 +221,7 @@ body {
   padding-bottom: 4px;
 }
 .field_input {
+  display: block;
   outline: none;
   background: #ebebeb;
   border: 2px solid #e7e7e7;
@@ -228,6 +232,9 @@ body {
   width: 100%;
   transition: ease 0.1s;
   color: #333333;
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: 500;
 }
 .field_input:focus {
   border: 2px solid #afafaf;

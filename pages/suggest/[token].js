@@ -73,6 +73,7 @@ export default function Suggest(props) {
           type="text"
           value={suggestionText}
           onChange={(e) => setSuggestionText(e.target.value)}
+          textArea={true}
         />
         <Field
           label="Your Display Name"
