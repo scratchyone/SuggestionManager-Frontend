@@ -423,7 +423,16 @@ button {
   border-radius: 8px;
   padding: 3px;
   padding-left: 13px;
-  padding-bottom: 10px;
+  padding-bottom: 7px;
   display: flex;
   flex-direction: column;
+}
+.suggestion_timestamp {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 20.5px;
+  line-height: 31px;
+  color: #858585;
+  padding-top: 0;
 }

@@ -43,7 +43,16 @@ export function Suggestion(props) {
     <div className="suggestion_columns">
       <div className="suggestion_wrapper">
         <div className="suggestion_left">
-          <div className="suggestion_displayname">{props.displayName}</div>
+          <div className="suggestion_displayname">
+            {props.displayName}{' '}
+            {!props.inTrash && (
+              <span className="suggestion_timestamp">
+                {formatDistance(new Date(props.timestamp * 1000), Date.now(), {
+                  addSuffix: true,
+                })}
+              </span>
+            )}
+          </div>
           <div className="suggestion_desc">{props.description}</div>
         </div>
         <div

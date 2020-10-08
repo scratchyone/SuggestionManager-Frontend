@@ -114,6 +114,7 @@ export default function Manager(props) {
                   id={s.id}
                   refetch={refetch}
                   toast={toast}
+                  timestamp={s.timestamp}
                 />
               ))}
         </div>
