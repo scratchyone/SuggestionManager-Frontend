@@ -16,6 +16,14 @@ export default function Manager(props) {
         <div className="thank_text">
           Thanks so much for submitting to {name || props.name}!
         </div>
+        <div className="setup_button_wrapper">
+          <button
+            className="setup_button thank_back_button"
+            onClick={() => router.back()}
+          >
+            Submit Another
+          </button>
+        </div>
       </div>
     </div>
   );
