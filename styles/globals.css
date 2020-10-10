@@ -171,7 +171,7 @@ body {
   justify-content: center;
 }
 .floating_card {
-  background: #f3f3f3;
+  background: #eeeeee;
   border-radius: 11px;
   box-shadow: 4px 4px 250px rgba(0, 0, 0, 0.2);
 }
@@ -362,8 +362,8 @@ button {
 }
 .suggestions_holder {
   max-height: 70vh;
-  overflow-y: auto;
-  overflow-x: none;
+  overflow: visible;
+  overflow: visible;
 }
 .suggest_subtext {
   padding-top: 0px;
@@ -421,7 +421,8 @@ button {
 }
 .suggestion_columns {
   margin-top: 20px;
-  background: #e6e6e6;
+  background: #f3f3f3;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   padding: 3px;
   padding-left: 13px;
