@@ -358,7 +358,7 @@ button {
   display: flex;
   align-items: center;
   color: #555555;
-  word-break: break-all;
+  word-break: break-word;
 }
 .suggestions_holder {
   max-height: 70vh;
