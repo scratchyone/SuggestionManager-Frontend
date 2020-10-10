@@ -437,6 +437,7 @@ button {
   line-height: 31px;
   color: #858585;
   padding-top: 0;
+  padding-left: 5px;
 }
 .thank_back_button {
   margin-top: 20px;
