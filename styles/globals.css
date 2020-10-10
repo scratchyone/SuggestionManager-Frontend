@@ -342,7 +342,7 @@ button {
   cursor: pointer;
 }
 .suggestion_displayname {
-  font-family: Open Sans;
+  font-family: Poppins;
   font-style: normal;
   font-weight: 600;
   font-size: 22px;
@@ -350,7 +350,7 @@ button {
   color: #333333;
 }
 .suggestion_desc {
-  font-family: Open Sans;
+  font-family: Poppins;
   font-style: normal;
   font-weight: normal;
   font-size: 21px;
@@ -430,7 +430,7 @@ button {
   flex-direction: column;
 }
 .suggestion_timestamp {
-  font-family: Open Sans;
+  font-family: Poppins;
   font-style: normal;
   font-weight: normal;
   font-size: 20.5px;
