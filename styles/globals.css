@@ -362,8 +362,9 @@ button {
 }
 .suggestions_holder {
   max-height: 70vh;
-  overflow: visible;
-  overflow: visible;
+  overflow-y: auto;
+  margin: -10px;
+  padding: 10px;
 }
 .suggest_subtext {
   padding-top: 0px;
@@ -429,6 +430,7 @@ button {
   padding-bottom: 7px;
   display: flex;
   flex-direction: column;
+  margin-bottom: 20px;
 }
 .suggestion_timestamp {
   font-family: Open Sans;
