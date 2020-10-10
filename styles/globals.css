@@ -206,7 +206,6 @@ textarea {
   font-size: 30px;
   line-height: 41px;
   color: #333333;
-  margin-bottom: 10px;
 }
 .field_wrapper {
   padding-top: 25px;
@@ -364,8 +363,10 @@ button {
 .suggestions_holder {
   max-height: 70vh;
   overflow-y: auto;
-  margin: -10px;
-  padding: 10px;
+  margin-left: -10px;
+  padding-left: 10px;
+  margin-right: -10px;
+  padding-right: 10px;
 }
 .suggest_subtext {
   padding-top: 0px;
