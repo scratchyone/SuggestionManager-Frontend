@@ -200,7 +200,7 @@ textarea {
 }
 .setup_title,
 .manager_title {
-  font-family: Poppins;
+  font-family: Open Sans;
   font-style: normal;
   font-weight: bold;
   font-size: 30px;
@@ -342,7 +342,7 @@ button {
   cursor: pointer;
 }
 .suggestion_displayname {
-  font-family: Poppins;
+  font-family: Open Sans;
   font-style: normal;
   font-weight: 600;
   font-size: 22px;
@@ -430,7 +430,7 @@ button {
   flex-direction: column;
 }
 .suggestion_timestamp {
-  font-family: Poppins;
+  font-family: Open Sans;
   font-style: normal;
   font-weight: normal;
   font-size: 20.5px;
