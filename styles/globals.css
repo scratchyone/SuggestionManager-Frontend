@@ -200,7 +200,7 @@ textarea {
 }
 .setup_title,
 .manager_title {
-  font-family: Open Sans;
+  font-family: Poppins;
   font-style: normal;
   font-weight: bold;
   font-size: 30px;
@@ -350,7 +350,7 @@ button {
   color: #333333;
 }
 .suggestion_desc {
-  font-family: Poppins;
+  font-family: Open Sans;
   font-style: normal;
   font-weight: normal;
   font-size: 21px;
