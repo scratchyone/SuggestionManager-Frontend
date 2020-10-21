@@ -1,4 +1,5 @@
 import TextareaAutosize from 'react-textarea-autosize';
+import { React } from 'react';
 export function Field(props) {
   return (
     <div className="field_wrapper">
@@ -24,17 +25,17 @@ export function Field(props) {
 }
 import formatDistance from 'date-fns/formatDistance';
 import add from 'date-fns/add';
-import { gql, useMutation, useQuery } from '@apollo/client';
+import { gql, useMutation } from '@apollo/client';
 import { toast } from 'react-toastify';
 export function Suggestion(props) {
-  const [deleteSuggestion, {}] = useMutation(gql`
+  const [deleteSuggestion] = useMutation(gql`
     mutation deleteSuggestion($key: String!, $id: Int!) {
       deleteSuggestion(key: $key, id: $id) {
         id
       }
     }
   `);
-  const [undeleteSuggestion, {}] = useMutation(gql`
+  const [undeleteSuggestion] = useMutation(gql`
     mutation undeleteSuggestion($key: String!, $id: Int!) {
       undeleteSuggestion(key: $key, id: $id) {
         id
@@ -63,7 +64,7 @@ export function Suggestion(props) {
         >
           {props.inTrash ? (
             <i
-              class="fas fa-undo"
+              className="fas fa-undo"
               onClick={() => {
                 undeleteSuggestion({
                   variables: { key: props.token, id: props.id },
@@ -73,7 +74,7 @@ export function Suggestion(props) {
             ></i>
           ) : (
             <i
-              class="fas fa-trash-alt"
+              className="fas fa-trash-alt"
               onClick={() => {
                 deleteSuggestion({
                   variables: { key: props.token, id: props.id },

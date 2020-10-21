@@ -2,7 +2,6 @@ import '../styles/globals.css';
 import 'react-toastify/dist/ReactToastify.css';
 import React from 'react';
 import { useEffect } from 'react';
-import { render } from 'react-dom';
 import { useRouter } from 'next/router';
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { ApolloProvider } from '@apollo/client';

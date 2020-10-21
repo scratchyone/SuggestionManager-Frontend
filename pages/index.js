@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useState, useEffect } from 'react';
+import { React, useEffect } from 'react';
 import Head from 'next/head';
 import { MAINTENANCE } from '../components/constants';
 export default function Home() {
@@ -40,13 +40,13 @@ export default function Home() {
           </div>
           <div className="homescreen_reasons">
             <div className="homescreen_reason">
-              <i class="fas fa-check"></i> No signup required
+              <i className="fas fa-check"></i> No signup required
             </div>
             <div className="homescreen_reason">
-              <i class="fas fa-check"></i> Easy to setup
+              <i className="fas fa-check"></i> Easy to setup
             </div>
             <div className="homescreen_reason">
-              <i class="fas fa-check"></i> 100% Free
+              <i className="fas fa-check"></i> 100% Free
             </div>
           </div>
         </div>

@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
-import Link from 'next/link';
+import { React } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
-import { gql, useMutation, useQuery } from '@apollo/client';
+import { gql, useQuery } from '@apollo/client';
 import { Suggestion } from '../../components/main.js';
 import Head from 'next/head';
 import { useEffect } from 'react';
@@ -12,7 +12,7 @@ export default function Suggestions(props) {
   useEffect(() => {
     router.prefetch('/suggestions_trash/' + (token || props.token));
   }, []);
-  var { loading, error, data, refetch } = useQuery(
+  var { data, refetch } = useQuery(
     gql`
       query getProject($key: String!) {
         project(key: $key) {
@@ -67,6 +67,7 @@ export default function Suggestions(props) {
                     refetch={refetch}
                     toast={toast}
                     timestamp={s.timestamp}
+                    key={s.id}
                   />
                 ))
             ) : (

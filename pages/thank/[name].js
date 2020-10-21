@@ -1,8 +1,5 @@
 import { useRouter } from 'next/router';
-import Link from 'next/link';
-import { ToastContainer, toast } from 'react-toastify';
-import ClipboardJS from 'clipboard';
-import { Suggestion } from '../../components/main.js';
+import { React } from 'react';
 import Head from 'next/head';
 export default function Manager(props) {
   const router = useRouter();

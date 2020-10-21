@@ -1,14 +1,15 @@
 import { useRouter } from 'next/router';
-import { useState, useHook, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Field } from '../../components/main.js';
 import { gql, useMutation, useQuery } from '@apollo/client';
+import { React } from 'react';
 import Head from 'next/head';
 export default function Suggest(props) {
   const router = useRouter();
   const { token } = router.query;
   const [displayName, setDisplayName] = useState('');
   const [suggestionText, setSuggestionText] = useState('');
-  var { loading, error, data, refetch } = useQuery(
+  var { data } = useQuery(
     gql`
       query getProject($key: String!) {
         project(key: $key) {

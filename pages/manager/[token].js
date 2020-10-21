@@ -1,24 +1,23 @@
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-const copy = require('clipboard-copy');
+import copy from 'clipboard-copy';
 import { gql, useMutation, useQuery } from '@apollo/client';
 import { ToastContainer, toast } from 'react-toastify';
-import { useApolloClient } from '@apollo/client';
 import { Suggestion } from '../../components/main.js';
 import { useEffect, useState } from 'react';
 import Head from 'next/head';
+import { React } from 'react';
 import { Slide } from 'react-toastify';
 export default function Manager(props) {
   const router = useRouter();
   const [origTimestamp, setOrigTimestamp] = useState(null);
-  const client = useApolloClient();
   const { token } = router.query;
-  const [refreshLastRead, { error: lrerror, data: lrdata }] = useMutation(gql`
+  const [refreshLastRead] = useMutation(gql`
     mutation refreshLastRead($key: String!) {
       refreshLastRead(key: $key)
     }
   `);
-  var { loading, error, data, refetch } = useQuery(
+  var { error, data, refetch } = useQuery(
     gql`
       query getProject($key: String!) {
         project(key: $key) {
@@ -86,7 +85,7 @@ export default function Manager(props) {
             (data.project.suggestions.filter(
               (s) => s.timestamp > (origTimestamp || Date.now())
             ).length === 0
-              ? `No`
+              ? 'No'
               : data.project.suggestions.filter(
                   (s) => s.timestamp > (origTimestamp || Date.now())
                 ).length)}{' '}
@@ -95,8 +94,8 @@ export default function Manager(props) {
             (data.project.suggestions.filter(
               (s) => s.timestamp > (origTimestamp || Date.now())
             ).length === 1
-              ? ``
-              : `s`)}
+              ? ''
+              : 's')}
           <Link href={`/suggestions/${token}`}>
             <a className="manager_view_all">View All</a>
           </Link>
@@ -115,6 +114,7 @@ export default function Manager(props) {
                   refetch={refetch}
                   toast={toast}
                   timestamp={s.timestamp}
+                  key={s.id}
                 />
               ))}
         </div>
@@ -125,7 +125,7 @@ export default function Manager(props) {
               _document &&
                 copy(
                   new URL(
-                    `/suggest/` +
+                    '/suggest/' +
                       data.project.tokens.find(
                         (n) => n.permission === 'ADD_SUGGESTIONS'
                       ).key,
