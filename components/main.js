@@ -1,14 +1,16 @@
+import TextareaAutosize from 'react-textarea-autosize';
 export function Field(props) {
   return (
     <div className="field_wrapper">
       <div className="field_label">{props.label}</div>
       {props.textArea ? (
-        <textarea
+        <TextareaAutosize
           className="field_input"
           type={props.type}
+          maxRows={8}
           value={props.value}
           onChange={props.onChange}
-        ></textarea>
+        ></TextareaAutosize>
       ) : (
         <input
           className="field_input"
