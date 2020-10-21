@@ -1,5 +1,5 @@
 import TextareaAutosize from 'react-textarea-autosize';
-import { React } from 'react';
+import React from 'react';
 export function Field(props) {
   return (
     <div className="field_wrapper">

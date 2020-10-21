@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import { Field } from '../../components/main.js';
 import { gql, useMutation, useQuery } from '@apollo/client';
-import { React } from 'react';
+import React from 'react';
 import Head from 'next/head';
 export default function Suggest(props) {
   const router = useRouter();

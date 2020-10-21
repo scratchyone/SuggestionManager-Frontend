@@ -6,7 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { Suggestion } from '../../components/main.js';
 import { useEffect, useState } from 'react';
 import Head from 'next/head';
-import { React } from 'react';
+import React from 'react';
 import { Slide } from 'react-toastify';
 export default function Manager(props) {
   const router = useRouter();

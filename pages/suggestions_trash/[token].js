@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { React } from 'react';
+import React from 'react';
 import { ToastContainer } from 'react-toastify';
 import { gql, useQuery } from '@apollo/client';
 import { Suggestion } from '../../components/main.js';

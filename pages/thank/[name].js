@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { React } from 'react';
+import React from 'react';
 import Head from 'next/head';
 export default function Manager(props) {
   const router = useRouter();

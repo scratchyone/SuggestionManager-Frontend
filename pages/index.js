@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
-import { React, useEffect } from 'react';
+import React, { useEffect } from 'react';
+
 import Head from 'next/head';
 import { MAINTENANCE } from '../components/constants';
 export default function Home() {
