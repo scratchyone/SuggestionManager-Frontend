@@ -236,6 +236,16 @@ textarea {
   font-style: normal;
   font-weight: 500;
 }
+textarea.field_input {
+  overflow-y: scroll;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+textarea.field_input::-webkit-scrollbar {
+  /* WebKit */
+  width: 0;
+  height: 0;
+}
 .field_input:focus {
   border: 2px solid #afafaf;
 }
