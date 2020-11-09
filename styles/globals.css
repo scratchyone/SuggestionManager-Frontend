@@ -283,6 +283,9 @@ textarea.field_input::-webkit-scrollbar {
   align-items: center;
   align-content: center;
 }
+.manager_button_padding {
+  padding-right: 10px;
+}
 .manager_button {
   cursor: pointer;
   border-radius: 9px;
@@ -299,6 +302,7 @@ textarea.field_input::-webkit-scrollbar {
   color: #ffffff;
   margin-left: 0px;
   margin-right: 0px;
+  flex-grow: 1;
 }
 .share_button {
   background: #3565ad;

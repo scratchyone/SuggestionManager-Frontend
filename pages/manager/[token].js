@@ -138,6 +138,7 @@ export default function Manager(props) {
           >
             Share
           </button>
+          <div className="manager_button_padding" />
           <button
             className="manager_button delete_button"
             onClick={() => 4 /*router.push('/capability/454435435345435')*/}
