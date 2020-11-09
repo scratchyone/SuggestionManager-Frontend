@@ -3,7 +3,7 @@ import Link from 'next/link';
 import copy from 'clipboard-copy';
 import { gql, useMutation, useQuery } from '@apollo/client';
 import { ToastContainer, toast } from 'react-toastify';
-import { Suggestion } from '../../components/main.js';
+import { ProjectTitle, Suggestion } from '../../components/main.js';
 import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import React from 'react';
@@ -76,9 +76,10 @@ export default function Manager(props) {
       </Head>
       <ToastContainer transition={Slide} />
       <div className="floating_card manager_card">
-        <div className="manager_title">
-          {data ? data.project.projectName : <br></br>}
-        </div>
+        <ProjectTitle
+          name={data ? data.project.projectName : <br></br>}
+          token={token || props.token}
+        />
         <div className="subtext">Remember, your URL is your admin password</div>
         <div className="manager_new_suggestions">
           {data &&

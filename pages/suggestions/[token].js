@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import { gql, useQuery } from '@apollo/client';
-import { Suggestion } from '../../components/main.js';
+import { Suggestion, ProjectTitle } from '../../components/main.js';
 import Head from 'next/head';
 import { useEffect } from 'react';
 import { Slide } from 'react-toastify';
@@ -50,9 +50,10 @@ export default function Suggestions(props) {
       </Head>
       <ToastContainer transition={Slide} />
       <div className="floating_card manager_card">
-        <div className="manager_title">
-          {data ? data.project.projectName : <br></br>}
-        </div>
+        <ProjectTitle
+          name={data ? data.project.projectName : <br></br>}
+          token={token || props.token}
+        />
         <div className="suggestions_holder">
           {data &&
             (data.project.suggestions.filter((s) => !s.inTrash).length ? (

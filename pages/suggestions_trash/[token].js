@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import { ToastContainer } from 'react-toastify';
 import { gql, useQuery } from '@apollo/client';
-import { Suggestion } from '../../components/main.js';
+import { Suggestion, ProjectTitle } from '../../components/main.js';
 import Head from 'next/head';
 import { useEffect } from 'react';
 import add from 'date-fns/add';
@@ -64,9 +64,10 @@ export default function Suggestions(props) {
       <ToastContainer />
       <div className="floating_card manager_card">
         <div className="trash_title_wrapper">
-          <div className="manager_title">
-            {data ? data.project.projectName : <br></br>}
-          </div>
+          <ProjectTitle
+            name={data ? data.project.projectName : <br></br>}
+            token={token || props.token}
+          />
           <div className="trash_indicator">Trash</div>
         </div>
         <div className="subtext">

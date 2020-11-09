@@ -206,6 +206,7 @@ textarea {
   font-size: 30px;
   line-height: 41px;
   color: #333333;
+  text-decoration: none;
 }
 .field_wrapper {
   padding-top: 25px;

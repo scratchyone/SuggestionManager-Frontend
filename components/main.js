@@ -1,5 +1,7 @@
 import TextareaAutosize from 'react-textarea-autosize';
 import React from 'react';
+import Link from 'next/link';
+
 export function Field(props) {
   return (
     <div className="field_wrapper">
@@ -21,6 +23,13 @@ export function Field(props) {
         ></input>
       )}
     </div>
+  );
+}
+export function ProjectTitle(props) {
+  return (
+    <Link href={`/manager/${props.token}`}>
+      <a className="manager_title">{props.name}</a>
+    </Link>
   );
 }
 import formatDistance from 'date-fns/formatDistance';
