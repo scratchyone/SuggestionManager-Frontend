@@ -1,44 +1,50 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import { ToastContainer, toast } from 'react-toastify';
-import { gql, useQuery } from '@apollo/client';
-import { Suggestion, ProjectTitle } from '../../components/main.js';
+import {
+  Suggestion,
+  ProjectTitle,
+  useToken,
+  useProject,
+} from '../../components/main.js';
 import Head from 'next/head';
 import { useEffect } from 'react';
 import { Slide } from 'react-toastify';
+import Swal from 'sweetalert2';
 export default function Suggestions(props) {
   const router = useRouter();
   const { token } = router.query;
   useEffect(() => {
     router.prefetch('/suggestions_trash/' + (token || props.token));
   }, []);
-  var { data, refetch } = useQuery(
-    gql`
-      query getProject($key: String!) {
-        project(key: $key) {
-          projectName
-          lastReadTimestamp
-          suggestions {
-            id
-            displayName
-            suggestionText
-            timestamp
-            inTrash
-          }
-        }
-      }
-    `,
-    { variables: { key: token || props.token } }
+  const { data: tokenData } = useToken(token || props.token);
+  const { data: project, mutate } = useProject(
+    tokenData && tokenData.projectId,
+    token || props.token
   );
+  useEffect(() => {
+    if (tokenData) {
+      if (tokenData.error) {
+        Swal.fire({
+          title: 'Deleted Project',
+          text: 'This project has been deleted',
+          icon: 'error',
+          showConfirmButton: false,
+          allowEscapeKey: false,
+          allowOutsideClick: false,
+        });
+      }
+    }
+  }, [tokenData]);
   return (
     <div className="floating_bg_box">
       <Head>
         <title>
-          {data ? 'Suggestions for ' + data.project.projectName : 'Suggestions'}
+          {project ? 'Suggestions for ' + project.projectName : 'Suggestions'}
         </title>
         <meta
           content={
-            data ? 'Suggestions for ' + data.project.projectName : 'Suggestions'
+            project ? 'Suggestions for ' + project.projectName : 'Suggestions'
           }
           property="og:title"
         />
@@ -51,13 +57,13 @@ export default function Suggestions(props) {
       <ToastContainer transition={Slide} />
       <div className="floating_card manager_card">
         <ProjectTitle
-          name={data ? data.project.projectName : <br></br>}
+          name={project ? project.projectName : <br></br>}
           token={token || props.token}
         />
         <div className="suggestions_holder">
-          {data &&
-            (data.project.suggestions.filter((s) => !s.inTrash).length ? (
-              data.project.suggestions
+          {project &&
+            (project.suggestions.filter((s) => !s.inTrash).length ? (
+              project.suggestions
                 .filter((s) => !s.inTrash)
                 .map((s) => (
                   <Suggestion
@@ -65,10 +71,11 @@ export default function Suggestions(props) {
                     description={s.suggestionText}
                     token={token || props.token}
                     id={s.id}
-                    refetch={refetch}
+                    refetch={mutate}
                     toast={toast}
                     timestamp={s.timestamp}
                     key={s.id}
+                    project={project}
                   />
                 ))
             ) : (

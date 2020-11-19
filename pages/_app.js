@@ -1,16 +1,10 @@
 import '../styles/globals.css';
+import 'sweetalert2/src/sweetalert2.scss';
 import 'react-toastify/dist/ReactToastify.css';
 import React from 'react';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { ApolloClient, InMemoryCache } from '@apollo/client';
-import { ApolloProvider } from '@apollo/client';
-import { GQL, MAINTENANCE } from '../components/constants.js';
-const client = new ApolloClient({
-  // uri: 'https://backend.suggestionmanager.com/graphql',
-  uri: GQL,
-  cache: new InMemoryCache(),
-});
+import { MAINTENANCE } from '../components/constants.js';
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
   useEffect(() => {
@@ -18,11 +12,7 @@ function MyApp({ Component, pageProps }) {
       router.push('/');
     }
   }, []);
-  return (
-    <ApolloProvider client={client}>
-      <Component {...pageProps} />
-    </ApolloProvider>
-  );
+  return <Component {...pageProps} />;
 }
 
 export default MyApp;

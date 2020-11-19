@@ -1,38 +1,42 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import { ToastContainer } from 'react-toastify';
-import { gql, useQuery } from '@apollo/client';
-import { Suggestion, ProjectTitle } from '../../components/main.js';
+import {
+  Suggestion,
+  ProjectTitle,
+  useToken,
+  useProject,
+} from '../../components/main.js';
 import Head from 'next/head';
 import { useEffect } from 'react';
 import add from 'date-fns/add';
 import compareAsc from 'date-fns/compareAsc';
+import Swal from 'sweetalert2';
 export default function Suggestions(props) {
   const router = useRouter();
   const { token } = router.query;
   useEffect(() => {
     router.prefetch('/suggestions/' + (token || props.token));
   }, []);
-  var { data, refetch } = useQuery(
-    gql`
-      query getProject($key: String!) {
-        project(key: $key) {
-          projectName
-          lastReadTimestamp
-          suggestions {
-            id
-            displayName
-            suggestionText
-            timestamp
-            inTrash
-            trashedTimestamp
-          }
-        }
-      }
-    `,
-    { variables: { key: token || props.token } }
+  const { data: tokenData } = useToken(token || props.token);
+  const { data: project, mutate } = useProject(
+    tokenData && tokenData.projectId,
+    token || props.token
   );
-  refetch();
+  useEffect(() => {
+    if (tokenData) {
+      if (tokenData.error) {
+        Swal.fire({
+          title: 'Deleted Project',
+          text: 'This project has been deleted',
+          icon: 'error',
+          showConfirmButton: false,
+          allowEscapeKey: false,
+          allowOutsideClick: false,
+        });
+      }
+    }
+  }, [tokenData]);
   let filt = (s) =>
     s.inTrash &&
     compareAsc(
@@ -43,14 +47,14 @@ export default function Suggestions(props) {
     <div className="floating_bg_box">
       <Head>
         <title>
-          {data
-            ? 'Trashed Suggestions for ' + data.project.projectName
+          {project
+            ? 'Trashed Suggestions for ' + project.projectName
             : 'Trashed Suggestions'}
         </title>
         <meta
           content={
-            data
-              ? 'Trashed Suggestions for ' + data.project.projectName
+            project
+              ? 'Trashed Suggestions for ' + project.projectName
               : 'Trashed Suggestions'
           }
           property="og:title"
@@ -65,7 +69,7 @@ export default function Suggestions(props) {
       <div className="floating_card manager_card">
         <div className="trash_title_wrapper">
           <ProjectTitle
-            name={data ? data.project.projectName : <br></br>}
+            name={project ? project.projectName : <br></br>}
             token={token || props.token}
           />
           <div className="trash_indicator">Trash</div>
@@ -74,9 +78,9 @@ export default function Suggestions(props) {
           Items will be permanently deleted after 5 days
         </div>
         <div className="suggestions_holder">
-          {data &&
-            (data.project.suggestions.filter(filt).length ? (
-              [...data.project.suggestions.filter(filt)]
+          {project &&
+            (project.suggestions.filter(filt).length ? (
+              [...project.suggestions.filter(filt)]
                 .sort((a, b) => b.trashedTimestamp - a.trashedTimestamp)
                 .map((s) => (
                   <Suggestion
@@ -84,10 +88,11 @@ export default function Suggestions(props) {
                     description={s.suggestionText}
                     token={token || props.token}
                     id={s.id}
-                    refetch={refetch}
+                    refetch={mutate}
                     inTrash={s.inTrash}
                     trashedTimestamp={s.trashedTimestamp}
                     key={s.id}
+                    project={project}
                   />
                 ))
             ) : (

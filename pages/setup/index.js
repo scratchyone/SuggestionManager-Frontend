@@ -1,25 +1,12 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import { Field } from '../../components/main.js';
-import { gql, useMutation } from '@apollo/client';
+import { addProject, Field } from '../../components/main.js';
 import Head from 'next/head';
 export default function Setup() {
   const router = useRouter();
   const [ownerName, setOwnerName] = useState('');
   const [projectName, setProjectName] = useState('');
-  const [newProject, { error, data }] = useMutation(gql`
-    mutation newProject($ownerName: String!, $projectName: String!) {
-      newProject(ownerName: $ownerName, projectName: $projectName) {
-        tokens {
-          key
-        }
-      }
-    }
-  `);
-  if (data) {
-    console.log(data);
-    router.push('/manager/' + data.newProject.tokens[0].key);
-  }
+  const [error, setError] = useState(undefined);
   return (
     <div className="floating_bg_box">
       <Head>
@@ -48,16 +35,23 @@ export default function Setup() {
           onChange={(e) => setOwnerName(e.target.value)}
           type="text"
         />
-        <div className="error">
-          {error && error.networkError.result.errors[0].message}
-        </div>
+        <div className="error">{error}</div>
         <div className="setup_button_wrapper">
           <button
             className="setup_button"
-            onClick={() => {
-              newProject({
-                variables: { ownerName: ownerName, projectName: projectName },
+            onClick={async () => {
+              const res = await addProject({
+                ownerName,
+                projectName,
               });
+              if (res.error) setError(res.error);
+              else
+                router.push(
+                  '/manager/' +
+                    res.data.tokens.find(
+                      (token) => token.permission === 'ADMIN'
+                    ).key
+                );
             }}
           >
             Create

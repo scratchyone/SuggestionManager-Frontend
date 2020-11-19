@@ -309,7 +309,7 @@ textarea.field_input::-webkit-scrollbar {
 }
 .delete_button {
   background: #ad3535;
-  cursor: not-allowed;
+  cursor: pointer;
 }
 button {
   outline: none;
@@ -461,4 +461,9 @@ button {
 }
 .thank_back_button {
   margin-top: 20px;
+}
+.swal2-title,
+.swal2-content,
+.swal2-styled {
+  font-family: 'Open Sans';
 }

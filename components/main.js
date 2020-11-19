@@ -1,7 +1,7 @@
 import TextareaAutosize from 'react-textarea-autosize';
 import React from 'react';
 import Link from 'next/link';
-
+import { API_URL } from './constants';
 export function Field(props) {
   return (
     <div className="field_wrapper">
@@ -34,23 +34,8 @@ export function ProjectTitle(props) {
 }
 import formatDistance from 'date-fns/formatDistance';
 import add from 'date-fns/add';
-import { gql, useMutation } from '@apollo/client';
 import { toast } from 'react-toastify';
 export function Suggestion(props) {
-  const [deleteSuggestion] = useMutation(gql`
-    mutation deleteSuggestion($key: String!, $id: Int!) {
-      deleteSuggestion(key: $key, id: $id) {
-        id
-      }
-    }
-  `);
-  const [undeleteSuggestion] = useMutation(gql`
-    mutation undeleteSuggestion($key: String!, $id: Int!) {
-      undeleteSuggestion(key: $key, id: $id) {
-        id
-      }
-    }
-  `);
   return (
     <div className="suggestion_columns">
       <div className="suggestion_wrapper">
@@ -74,9 +59,10 @@ export function Suggestion(props) {
           {props.inTrash ? (
             <i
               className="fas fa-undo"
-              onClick={() => {
-                undeleteSuggestion({
-                  variables: { key: props.token, id: props.id },
+              onClick={async () => {
+                await patchSuggestion(props.project.id, props.token, {
+                  id: props.id,
+                  inTrash: false,
                 });
                 props.refetch();
               }}
@@ -84,9 +70,10 @@ export function Suggestion(props) {
           ) : (
             <i
               className="fas fa-trash-alt"
-              onClick={() => {
-                deleteSuggestion({
-                  variables: { key: props.token, id: props.id },
+              onClick={async () => {
+                await patchSuggestion(props.project.id, props.token, {
+                  id: props.id,
+                  inTrash: true,
                 });
                 props.refetch();
                 toast.info('Moved suggestion to trash');
@@ -109,4 +96,94 @@ export function Suggestion(props) {
       )}
     </div>
   );
+}
+
+import useSWR from 'swr';
+export const useProject = (id, token) => {
+  return useSWR(
+    id && `${API_URL}projects/${id}${token}`,
+    async () =>
+      await (
+        await fetch(`${API_URL}projects/${id}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+      ).json()
+  );
+};
+export const useToken = (token) => {
+  return useSWR(
+    `${API_URL}tokens/${token}`,
+    async () => await (await fetch(`${API_URL}tokens/${token}`)).json()
+  );
+};
+export async function addSuggestion(id, token, suggestion) {
+  const res = await fetch(`${API_URL}projects/${id}/suggestions`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+    method: 'POST',
+    body: JSON.stringify({
+      displayName: suggestion.displayName,
+      suggestionText: suggestion.suggestionText,
+    }),
+  });
+  if (res.status !== 200)
+    return { error: (await res.json()).error, success: false };
+  else return { success: true };
+}
+export async function addProject(project) {
+  const res = await fetch(`${API_URL}projects`, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    method: 'POST',
+    body: JSON.stringify({
+      ownerName: project.ownerName,
+      projectName: project.projectName,
+    }),
+  });
+  if (res.status !== 200)
+    return { error: (await res.json()).error, success: false };
+  else return { success: true, data: await res.json() };
+}
+export async function patchProject(id, token, project) {
+  const res = await fetch(`${API_URL}projects/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+    method: 'PATCH',
+    body: JSON.stringify(project),
+  });
+  if (res.status !== 200)
+    return { error: (await res.json()).error, success: false };
+  else return { success: true };
+}
+export async function deleteProject(id, token) {
+  const res = await fetch(`${API_URL}projects/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    method: 'DELETE',
+  });
+  if (res.status !== 200)
+    return { error: (await res.json()).error, success: false };
+  else return { success: true };
+}
+export async function patchSuggestion(projectId, token, suggestion) {
+  const res = await fetch(
+    `${API_URL}projects/${projectId}/suggestions/${suggestion.id}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      method: 'PATCH',
+      body: JSON.stringify(suggestion),
+    }
+  );
+  if (res.status !== 200)
+    return { error: (await res.json()).error, success: false };
+  else return { success: true };
 }

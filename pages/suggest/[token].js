@@ -1,59 +1,54 @@
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
-import { Field } from '../../components/main.js';
-import { gql, useMutation, useQuery } from '@apollo/client';
+import {
+  Field,
+  useToken,
+  useProject,
+  addSuggestion,
+} from '../../components/main.js';
 import React from 'react';
 import Head from 'next/head';
+import Swal from 'sweetalert2';
 export default function Suggest(props) {
   const router = useRouter();
   const { token } = router.query;
   const [displayName, setDisplayName] = useState('');
   const [suggestionText, setSuggestionText] = useState('');
-  var { data } = useQuery(
-    gql`
-      query getProject($key: String!) {
-        project(key: $key) {
-          projectName
-        }
-      }
-    `,
-    { variables: { key: token || props.token } }
+  const { data: tokenData } = useToken(token || props.token);
+  const { data: project } = useProject(
+    tokenData && tokenData.projectId,
+    token || props.token
   );
-  const [addSuggestion, { error: aserror, data: asdata }] = useMutation(gql`
-    mutation addSuggestion(
-      $displayName: String!
-      $suggestionText: String!
-      $key: String!
-    ) {
-      addSuggestion(
-        displayName: $displayName
-        suggestionText: $suggestionText
-        key: $key
-      ) {
-        project {
-          projectName
-        }
+  const [aserror, setAserror] = useState(undefined);
+  useEffect(() => {
+    if (project) router.prefetch('/thank/' + project.projectName);
+  }, [project]);
+  useEffect(() => {
+    if (tokenData) {
+      if (tokenData.error) {
+        Swal.fire({
+          title: 'Deleted Project',
+          text: 'This project has been deleted',
+          icon: 'error',
+          showConfirmButton: false,
+          allowEscapeKey: false,
+          allowOutsideClick: false,
+        });
       }
     }
-  `);
-  useEffect(() => {
-    if (data) router.prefetch('/thank/' + data.project.projectName);
-  }, [data]);
-  if (asdata) {
-    router.push('/thank/' + data.project.projectName);
-  }
+  }, [tokenData]);
   return (
     <div className="floating_bg_box">
       <Head>
         <title>
-          {data
-            ? 'Submit a suggestion for ' + data.project.projectName
+          {project
+            ? 'Submit a suggestion for ' + project.projectName
             : 'Submit a suggestion'}
         </title>
         <meta
           content={
-            data
-              ? 'Submit a suggestion for ' + data.project.projectName
+            project
+              ? 'Submit a suggestion for ' + project.projectName
               : 'Submit a suggestion'
           }
           property="og:title"
@@ -67,7 +62,7 @@ export default function Suggest(props) {
       <div className="floating_card setup_card">
         <div className="setup_title">Add a suggestion</div>
         <div className="suggest_subtext">
-          {data && data.project.projectName}
+          {(project && project.projectName) || <br />}
         </div>
         <Field
           label="Suggestion"
@@ -82,16 +77,21 @@ export default function Suggest(props) {
           value={displayName}
           onChange={(e) => setDisplayName(e.target.value)}
         />
-        <div className="error">
-          {aserror && aserror.networkError.result.errors[0].message}
-        </div>
+        <div className="error">{aserror}</div>
         <div className="setup_button_wrapper">
           <button
             className="setup_button"
-            onClick={() => {
-              addSuggestion({
-                variables: { displayName, suggestionText, key: token },
-              });
+            onClick={async () => {
+              const res = await addSuggestion(
+                tokenData.projectId,
+                token || props.token,
+                {
+                  displayName,
+                  suggestionText,
+                }
+              );
+              if (res.error) setAserror(res.error);
+              else router.push('/thank/' + project.projectName);
             }}
           >
             Add
