@@ -28,7 +28,9 @@ export function Field(props) {
 export function ProjectTitle(props) {
   return (
     <Link href={`/manager/${props.token}`}>
-      <a className="manager_title">{props.name}</a>
+      <a className="manager_title" role="heading" aria-level="1">
+        {props.name}
+      </a>
     </Link>
   );
 }
