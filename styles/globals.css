@@ -121,14 +121,20 @@ body {
   margin-left: 10px;
   margin-right: 10px;
   margin-top: 7vh;
-  background: #d3d3d3;
+  background: #e8e8e8;
   border-radius: 28px;
   padding: 3vw;
   margin-bottom: 20px;
+  box-shadow: 47.1174px 19.5179px 357px rgba(0, 0, 0, 0.08),
+    30.5391px 12.6505px 209.076px rgba(0, 0, 0, 0.0607407),
+    18.1489px 7.518px 113.711px rgba(0, 0, 0, 0.0485926),
+    9.42348px 3.90358px 58.0125px rgba(0, 0, 0, 0.04),
+    3.8392px 1.59035px 29.0889px rgba(0, 0, 0, 0.0314074),
+    0.872545px 0.361443px 14.0486px rgba(0, 0, 0, 0.0192593);
 }
 @media (min-width: 600px) {
   .homescreen_why {
-    font-family: Raleway;
+    font-family: 'Open Sans';
     font-style: normal;
     font-weight: 600;
     font-size: 40px;
@@ -139,7 +145,7 @@ body {
 }
 @media (max-width: 600px) {
   .homescreen_why {
-    font-family: Raleway;
+    font-family: 'Open Sans';
     font-style: normal;
     font-weight: 600;
     font-size: 7vw;
