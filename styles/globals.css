@@ -50,10 +50,10 @@ body {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 50vw;
+  width: 950px;
   padding-top: 20px;
 }
-@media (max-width: 600px) {
+@media (max-width: 930px) {
   .homepage_cards {
     flex-wrap: wrap;
     width: 90vw;
@@ -81,7 +81,7 @@ body {
   color: #535353;
   max-width: 280px;
 }
-@media (max-width: 600px) {
+@media (max-width: 930px) {
   .homepage_card_subtitle {
     padding-bottom: 20px;
   }
