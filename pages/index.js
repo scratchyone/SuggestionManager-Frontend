@@ -20,10 +20,15 @@ export default function Home() {
         <meta content="SuggestionManager" property="og:site_name" />
       </Head>
       <div className="homescreen_cover">
-        <div className="homescreen_tagline">Take Suggestions, Quickly</div>
+        <div className="homescreen_tagline">
+          Take Suggestions,{' '}
+          <span className="homescreen_tagline_highlight">
+            Quickly And Easily
+          </span>
+        </div>
         <div className="homescreen_desc">
-          SuggestionManager lets you get ideas from your users, quickly and
-          easily.
+          SuggestionManager is the best way to get ideas from your users. No
+          accounts are required, so every project is just a private link.{' '}
         </div>
         <button
           className={
@@ -31,27 +36,35 @@ export default function Home() {
           }
           onClick={() => !MAINTENANCE && router.push('/setup')}
         >
-          {!MAINTENANCE ? 'Get Started' : 'Under Maintenance'}
+          {!MAINTENANCE ? 'Create a Project' : 'Under Maintenance'}
         </button>
-      </div>
-      <div className="homescreen_box_holder">
-        <div className="homescreen_box">
-          <div className="homescreen_why">
-            Why should you use SuggestionManager?
-          </div>
-          <div className="homescreen_reasons">
-            <div className="homescreen_reason">
-              <i className="fas fa-check"></i> No signup required
-            </div>
-            <div className="homescreen_reason">
-              <i className="fas fa-check"></i> Easy to setup
-            </div>
-            <div className="homescreen_reason">
-              <i className="fas fa-check"></i> 100% Free
-            </div>
-          </div>
+        <div className="homepage_cards">
+          {[
+            {
+              heading: 'Open Source',
+              subtitle: 'SuggestionManager is 100% Open Source',
+            },
+            {
+              heading: 'No Accounts',
+              subtitle: 'No account is needed to use SuggestionManager',
+            },
+            {
+              heading: 'Simple',
+              subtitle: 'SuggestionManager is designed to be easy to use',
+            },
+          ].map(({ heading, subtitle }) => (
+            <FeatureCard heading={heading} subtitle={subtitle} key={heading} />
+          ))}
         </div>
       </div>
+    </div>
+  );
+}
+function FeatureCard({ heading, subtitle }) {
+  return (
+    <div className="homepage_card">
+      <div className="homepage_card_heading">{heading}</div>
+      <div className="homepage_card_subtitle">{subtitle}</div>
     </div>
   );
 }
