@@ -40,6 +40,7 @@ export default function Suggest(props) {
   return (
     <div className="floating_bg_box">
       <Head>
+        <meta name="robots" content="noindex" />
         <title>
           {project
             ? 'Submit a suggestion for ' + project.projectName

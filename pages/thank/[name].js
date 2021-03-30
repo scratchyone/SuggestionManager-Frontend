@@ -7,6 +7,7 @@ export default function Manager(props) {
   return (
     <div className="floating_bg_box">
       <Head>
+        <meta name="robots" content="noindex" />
         <title>Thanks for submitting!</title>
       </Head>
       <div className="floating_card manager_card">

@@ -61,6 +61,7 @@ export default function Manager(props) {
   return (
     <div className="floating_bg_box">
       <Head>
+        <meta name="robots" content="noindex" />
         <title>SuggestionManager Project</title>
         <meta
           content={

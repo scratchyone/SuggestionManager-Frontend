@@ -11,6 +11,7 @@ export default function Setup() {
     <div className="floating_bg_box">
       <Head>
         <title>Create a new SuggestionManager Project</title>
+        <meta name="robots" content="noindex" />
         <meta
           content="Create a new SuggestionManager Project"
           property="og:title"
