@@ -1,5 +1,6 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 import React from 'react';
+import { ANALYTICS } from '../components/constants';
 class MyDocument extends Document {
   render() {
     return (
@@ -18,6 +19,9 @@ class MyDocument extends Document {
             src="https://kit.fontawesome.com/f0c4209332.js"
             crossOrigin="anonymous"
           ></script>
+          {ANALYTICS && (
+            <div hidden dangerouslySetInnerHTML={{ __html: ANALYTICS }} />
+          )}
         </Head>
         <body>
           <Main />
